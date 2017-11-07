@@ -1,0 +1,70 @@
+#include <ros/ros.h>
+#include <sensor_msgs/LaserScan.h>
+#include <geometry_msgs/Twist.h>
+#include <math.h>
+
+/******************************************************************************
+ *3456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+ * Class 'project_03ls
+' for the queueing theory computation.
+ *
+ * Author/copyright: Conner Roberts
+ * 
+ * Date last modified: 11 October 2017
+**/
+
+class project_03
+{
+	public:
+
+	//
+	double wallDis, errorMargin, derivative, Speed, pConst, dConst,
+		   direction, angleMin, toWall, brownie;
+	ros::Publisher pub;
+	
+	//constructor
+	project_03(ros::Publisher paramPub)
+	{
+		pub = paramPub;
+		wallDis = 0.6;//desired distance to stay away from the wall
+		Speed = 0.1;//full speed when nothing is in front
+		pConst = 5;
+		dConst = 5;
+		errorMargin = 0;
+		derivative = 0;
+		direction = -1; //the right wall
+		brownie = 3.14159265359; //pie is the obvious inferior dessert	
+	}
+	
+	~project_03()
+	{
+	}
+
+	/**
+	* Function 'messagePub()'
+	* This function publishes the desired speeds to the robot
+	**/
+	void messagePub()
+	{
+		geometry_msgs::Twist msg;
+		msg.linear.x = 0.1;
+
+		pub.publish(msg);
+	}
+	
+};
+
+int main(int argc, char **argv)
+{
+	
+	ros::init(argc, argv, "project_03");
+	ros::NodeHandle nh;
+	ros::Publisher pubMes = nh.advertise<geometry_msgs::Twist>
+		("/mobile_base/commands/velocity", 10);//create the publisher
+	//create our custom object for the pd controller
+	project_03 *cntrl = new project_03(pubMes);
+	ros::spin();
+	return 0;
+	
+
+}

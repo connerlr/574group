@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>csce574hw2</name>
+  <name>project_03</name>
   <version>0.0.0</version>
-  <description>The csce574hw2 package</description>
+  <description>The project_03 package</description>
   <maintainer email="connerlr@email.sc.edu">conner</maintainer>
   <license>TODO</license>
   <buildtool_depend>catkin</buildtool_depend>
